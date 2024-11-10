@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import SubmitButton from "@/components/submit-button";
 import { UserFormValidation } from "@/lib/validation";
+import { createUser } from "@/lib/actions/patient.action";
 
 export enum FormFieldTypes {
   INPUT = "input",
@@ -50,17 +51,17 @@ const PatientForm = () => {
 
     try {
       // TODO: Implement your API call to create user here.
-      // const userData = {
-      //   name,
-      //   email,
-      //   phone,
-      // };
+      const userData = {
+        name,
+        email,
+        phone,
+      };
 
-      // const user = await createUser(userData)
+      const user = await createUser(userData)
 
-      // if(user) {
-      //   router.push(`/patients/${user.$id}/register`)
-      // }
+      if(user) {
+        router.push(`/patients/${user.$id}/register`)
+      }
 
     } catch (error) {
       console.log(error);
