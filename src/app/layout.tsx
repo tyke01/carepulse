@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 
-
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider"
-
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -32,12 +31,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-            <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            
-          >
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="dark">
+          {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
