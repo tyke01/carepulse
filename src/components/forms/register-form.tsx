@@ -7,23 +7,23 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import CustomFormField from "@/components/custom-formField";
-import FileUploader from "@/components/file-uploader";
 import { FormFieldTypes } from "@/components/forms/patient-form";
 import SubmitButton from "@/components/submit-button";
 import { Form, FormControl } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SelectItem } from "@/components/ui/select";
+import { createUser, registerPatient } from "@/lib/actions/patient.action";
+import { PatientFormValidation } from "@/lib/validation";
+import { User } from "@/types";
 import {
   Doctors,
   GenderOptions,
   IdentificationTypes,
   PatientFormDefaultValues,
 } from "@/constants";
-import { registerPatient } from "@/lib/actions/patient.action";
-import { PatientFormValidation } from "@/lib/validation";
-import { User } from "@/types";
+import { Label } from "@/components/ui/label";
+import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
+import FileUploader from "@/components/file-uploader";
 
 
 const RegisterForm = ({ user }: { user: User }) => {
@@ -43,7 +43,7 @@ const RegisterForm = ({ user }: { user: User }) => {
   const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
     setIsLoading(true);
 
-    // Store file info in form `data` as
+    // Store file info in form data as
     let formData;
     if (
       values.identificationDocument &&
@@ -57,6 +57,8 @@ const RegisterForm = ({ user }: { user: User }) => {
       formData.append("blobFile", blobFile);
       formData.append("fileName", values.identificationDocument[0].name);
     }
+
+  
 
     try {
       const patient = {

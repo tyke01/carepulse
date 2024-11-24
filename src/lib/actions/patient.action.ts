@@ -49,45 +49,15 @@ export const getUser = async (userId: string) => {
   }
 };
 
-// export const registerPatient = async ({
-//   identificationDocument,
-//   ...patient
-// }: RegisterUserParams) => {
-//   try {
-//     let file;
-//     if (identificationDocument) {
-//       const blob = identificationDocument.get("blobFIle") as Blob;
-//       const arrayBuffer = await blob.arrayBuffer();
-//       const buffer = Buffer.from(arrayBuffer);
-      
-//       const inputFile = InputFile.fromBuffer(buffer, identificationDocument.get("fileName") as string);
-      
+export const getPatient = async (userId: string) => {
+  try {
+    const patients = await databases.listDocuments(DATABASE_ID!, PATIENT_COLLECTION_ID!, [Query.equal("userId", userId)]);
+    return parseStringify(patients.documents[0])
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//       file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
-//     }
-
-//     console.log({gender: patient.gender})
-
-//     const newPatient = await databases.createDocument(
-//       DATABASE_ID!,
-//       PATIENT_COLLECTION_ID!,
-//       ID.unique(),
-//       {
-//         identificationDocumentId: file?.$id || null,
-//         identificationDocumentUrl: `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`,
-//         ...patient
-//       }
-//     );
-
-//     return parseStringify(newPatient)
-//   } catch (error: any) {
-//     console.error("Error details:", {
-//       message: error?.message,
-//       code: error?.code,
-//       response: error?.response,
-//     });
-//   }
-// };
 
 export const registerPatient = async ({
   identificationDocument,
