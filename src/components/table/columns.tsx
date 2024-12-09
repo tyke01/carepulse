@@ -5,14 +5,7 @@ import { MoreHorizontal } from "lucide-react"
 import Image from "next/image"
 
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+
 import { Button } from "@/components/ui/button"
 import StatusBadge from "@/components/status-badge"
 import { Appointment } from "@/types/appwrite.types"
@@ -71,10 +64,12 @@ export const columns: ColumnDef<Appointment>[] = [
   {
     id: "actions",
     header: () => <div className="pl-4">Actions</div>,
-    cell: ({ row }) => {
+    cell: ({ row: {original: data} }) => {
+
       return (
         <div className="flex gap-1">
-          <AppointmentModal />
+          <AppointmentModal type="schedule" patientId={data.patient.$id}/>
+          <AppointmentModal type="cancel"/>
         </div>
       )
       
